@@ -6,6 +6,16 @@ import re
 import csv
 from langdetect import detect
 from langdetect.lang_detect_exception import LangDetectException
+import nltk
+import pickle
+import numpy as np
+from scipy.spatial import distance
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.stem import PorterStemmer
+from nltk.tokenize import RegexpTokenizer
+from collections import Counter
+N_doc=26543
 
 #We build this function in order to print like strings the items in the lists
 def print_list(l):

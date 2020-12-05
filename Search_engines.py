@@ -1,16 +1,53 @@
-import field_functions
+from field_functions import *
+import re
+import os
 import csv
-from heapq import heappush
+import nltk
+import pickle
+import numpy as np
 import heapq
+from scipy.spatial import distance
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 from nltk.tokenize import RegexpTokenizer
 from collections import Counter
+from heapq import heappush
+N_doc=26543
 
+''' Data preprocessing '''
+''' To create the .pkl files, see the "DataCollection&DataStructure(Point1)" written in the second part. '''
+# - keys: index of each word from 0 to 55037
+# - values: each book containing the unique word (index number)
+with open('inverted_index_1.pkl', 'rb') as handle:
+    inverted_index = pickle.load(handle) 
+
+# - keys: all words in the all documents
+# - values: index of each word from 0 to 55037
+with open('vocabulary.pkl', 'rb') as handle:
+    vocabulary = pickle.load(handle)
+
+# - keys: index of each word from 0 to 55037
+# - values: number of times a word appear in all books
+with open('vocabulary2.pkl', 'rb') as handle:
+    vocabulary2 = pickle.load(handle)
+
+# - keys: index of each word from 0 to 55037
+# - values: (book, TfIdf) for all the keys 
+with open('tfIdf_index.pkl', 'rb') as handle:
+    tfIdf_index = pickle.load(handle)
+
+# - keys: book
+# - values: (words, TfIdf) for all the words in the plot of the book
+with open('BookTokens.pkl', 'rb') as handle:
+    BookTokens = pickle.load(handle)
 
 """SEARCH ENGINE POINT 2.1"""
 def SearchEngine2_1():
+    tokenizer = RegexpTokenizer(r'[a-z]+') 
+    stop_words = set(stopwords.words("english"))
+    stemmer= PorterStemmer()
+
     query = input()
     # Apply the same preprocessing (using tokenizer and stemmer) also on the query string
     query = tokenizer.tokenize(query.lower())
@@ -45,7 +82,11 @@ def SearchEngine2_1():
                 print()
 
 """SEARCH ENGINE POINT 2.2"""
-def SearchEngine2_1():
+def SearchEngine2_2():
+    tokenizer = RegexpTokenizer(r'[a-z]+') 
+    stop_words = set(stopwords.words("english"))
+    stemmer= PorterStemmer()
+
     query = input()
     # Apply the same preprocessing (using tokenizer and stemmer) also on the query string
     query = tokenizer.tokenize(query.lower())
@@ -118,6 +159,10 @@ def SearchEngine2_1():
 
 
 def TfIdfScore_plot(query):
+    tokenizer = RegexpTokenizer(r'[a-z]+') 
+    stop_words = set(stopwords.words("english"))
+    stemmer= PorterStemmer()
+
     query = tokenizer.tokenize(query.lower())
     query_stems = [stemmer.stem(word) for word in query if word not in stop_words]
 
@@ -183,7 +228,7 @@ def SearchEngine3(fields_list):
     print("Write other parameters, specifing the field separated by a ','. Example: numberofpages 235, title hunger")
     text_input =input()
     text_input =text_input.split(",")
-    field_names =[x.name().lower() for x in fields]
+    field_names =[x.name().lower() for x in fields_list]
     query_dictionary ={}
     for input_field in text_input:
         input_field =input_field.split()
@@ -193,12 +238,12 @@ def SearchEngine3(fields_list):
                 continue
 
             if len(input_field ) >1:
-                query_dictionary[input_field[0] ] =" ".join(input_field[1:len(input_field)])
+                query_dictionary[input_field[0].lower()] =" ".join(input_field[1:len(input_field)])
             else:
                 print("Warning: the field" ,input_field[0] ,"has no specified value")
         else:
             if input_field:
-                print("Warning: the field" ,'" ' +input_field[0 ] +'"', "does not exist!")
+                print("Warning: the field" ,'" ' +input_field[0] +'"', "does not exist!")
             else:
                 print("Warning: empty field name entered")
 
