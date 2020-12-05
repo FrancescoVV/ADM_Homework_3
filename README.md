@@ -7,7 +7,7 @@ The repository contains the following files, together with all the pickle files 
 
 1. `DataCollection&DataStructure(Point1).ipynb`:
 
-        > you can find the Point 1 (not run because of the time to download all the books) and there are the definitions of the structures we used from Point 2 and           beyond such as inverted index, vocabularies, and so on.
+        > you can find the Point 1 (not run because of the time to download all the books) and there are the definitions of the structures we used from Point 2 and beyond such as inverted index, vocabularies, and so on.
         
 2. `Homework3.ipynb`:
           
