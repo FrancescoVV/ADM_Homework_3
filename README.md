@@ -5,7 +5,7 @@ The objective of the project was to build a Search Engine from the first 300 pag
 ## File Descriptions
 The repository contains the following files, together with all the pickle files in which they are saved in our data structures and with the folders of the downloaded books:
 
-1. `DataCollection&DataStructure(Point1).ipynb`:
+1. [DataCollection&DataStructure(Point1).ipynb](https://nbviewer.jupyter.org/github/FrancescoVV/ADM_Homework_3/blob/main/DataCollection%26DataStructure%28Point1%29.ipynb):
 
         > you can find the Point 1 (not run because of the time to download all the books) and there are the definitions of the structures we used from Point 2 and beyond such as inverted index, vocabularies, and so on.
         
